@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - GameRent</title>
+    <link rel="stylesheet" href="./register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- Header with Logo, User Info, and Menu Icon -->
+  <header>
+    <div class="container">
+      <h1>GameRent</h1>
+      <div id="user-info">
+        <i class="fas fa-user user-icon" onclick="openLoginModal()"></i>
+        <span id="user-name">Guest</span> | Credits: <span id="credits-count">0</span>
+      </div>
+      <i class="fas fa-bars menu-icon" onclick="openSidebar()"></i>
+    </div>
+  </header>
+
+  <!-- Sidebar Navigation for Small Screens -->
+  <div id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="./rentals.html"><i class="fas fa-gamepad"></i> Rentals</a>
+    <a href="./community.html"><i class="fas fa-users"></i> Community & Events</a>
+    <a href="./contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLoginModal()">&times;</span>
+      <h2>Login</h2>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="#" onclick="showSignUp()">Sign Up</a></p>
+    </div>
+  </div>
+
+  <!-- Sign-Up Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeSignUpModal()">&times;</span>
+      <h2>Sign Up</h2>
+      <form id="signupForm" onsubmit="handleSignUp(event)">
+        <input type="text" id="signupUsername" placeholder="Username" required />
+        <input type="password" id="signupPassword" placeholder="Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+    <!-- Main Registration Form Section -->
+    <main>
+        <h2>Register</h2>
+        <form id="registration-form" action="javascript:void(0)" method="POST" enctype="multipart/form-data">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required></textarea>
+
+            <label for="aadhaar">Aadhaar Photo:</label>
+            <input type="file" id="aadhaar" name="aadhaar" accept="image/*" required>
+
+            <label for="pan">PAN Card Photo:</label>
+            <input type="file" id="pan" name="pan" accept="image/*" required>
+
+            <button type="submit">Register</button>
+        </form>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 GameRent. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts-main.js"></script> <!-- Script for sidebar functionality -->
+
+    <!-- Registration JS -->
+    <script>
+        // Registration form submission
+        document.getElementById("registration-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Retrieve user data from the form
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const address = document.getElementById("address").value;
+            const aadhaar = document.getElementById("aadhaar").files[0];
+            const pan = document.getElementById("pan").files[0];
+
+            // Create a new user object with the registration data
+            const newUser = {
+                name: name,
+                email: email,
+                phone: phone,
+                address: address,
+                aadhaar: aadhaar.name,
+                pan: pan.name,
+                credits: 100, // Initial credits for the user
+            };
+
+            // Save the user data to localStorage (you could also use a backend database in production)
+            localStorage.setItem("currentUser", JSON.stringify(newUser));
+
+            // Redirect to the homepage
+            window.location.href = "./main.html";
+        });
+    </script>
+</body>
+</html>
